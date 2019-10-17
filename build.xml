@@ -90,7 +90,7 @@
 	 <target name="build-war" depends="TestServlet">
      <war destfile="${dist}/${project-name}.war" webxml="WebContent/WEB-INF/web.xml">
         <fileset dir="WebContent"/>
-        <lib dir="WebContent/WEB-INF/lib"/>
+        <!--lib dir="WebContent/WEB-INF/lib"/-->
         <classes dir="${build.dir}" excludes="test/" />  <!-- Excluse dir test from war build file -->       
     </war>
 </target>	 

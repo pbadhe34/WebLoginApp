@@ -1,0 +1,58 @@
+  <project name="WebApp" default="start" basedir=".">
+	<property file="build.properties" />
+	
+	<property name="war-file" value="${project-name}.war" />   
+	
+	<path id="build.path">
+		<pathelement location="lib/catalina-ant.jar" />		 
+		<pathelement location="lib/tomcat-util.jar" />	
+		<!-- <fileset dir="D:/apache-tomcat-8.0.23/lib">
+          <include name="*.jar"/>
+         </fileset> -->
+		 	 
+	</path>
+
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpathref="build.path"/>
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" classpathref="build.path"/>
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="build.path"/>
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="build.path"/>
+
+	<target name="stop" description="stop application in tomcat">
+	        <echo>Stopping the app on remote tomcat server</echo>
+		<stop url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}" />
+	</target>
+
+	<target name="start" description="start application in tomcat" depends="deploy">
+	    <echo>Starting the app on remote tomcat server</echo>
+	<start url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}" />
+	</target>
+	
+	<target name="undeploy" description="undeploy from tomcat">
+	    <echo>un-deploying from remote tomcat server</echo>
+		<undeploy 
+			failonerror="no"
+			url="${tomcat-manager-url}"
+			username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}" />	
+		 
+	</target>
+	
+	<target name="deploy" description="deploy to tomcat" depends="undeploy">  	
+		<echo>deploying to remote tomcat server</echo>
+		
+		<!-- <copy file="output/${war-file}" todir="D:/apache-tomcat-8.0.23/webapps"/>
+		<echo>deploying done with client</echo>
+		 -->
+		<deploy url="${tomcat-manager-url}"
+			username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:output/${war-file}"
+			update="true"
+		/>
+	</target>
+
+	 
+	
+</project>

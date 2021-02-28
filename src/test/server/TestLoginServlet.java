@@ -66,7 +66,7 @@ public class TestLoginServlet {
 		  
 		//configure mocks to play back the values
 		  when(request.getParameter("user")).thenReturn("viju");
-		  when(request.getParameter("password")).thenReturn("SeKreT101");
+		  when(request.getParameter("password")).thenReturn("SeKreT100");
 		  when(request.getParameter("rememberMe")).thenReturn("Yes-SuRe");
 		  when(request.getSession()).thenReturn(session);
 		  when(request.getRequestDispatcher("/user.do")).thenReturn(rd);
